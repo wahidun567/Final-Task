@@ -16,12 +16,12 @@ class ResepsionisSeeder extends Seeder
     {
          $user = User::create([
             'name' => 'resepsionis',
-            'email' => 'resepsionishotel@gamil.com',
+            'email' => 'resepsionishotel@gmail.com',
             'password' => bcrypt('resepsionis'),
             'email_verified_at' => now(),
         ]);
  
-        $user->assignRole('admin');
+        $user->assignRole('resepsionis');
 
         return $user;
     }
