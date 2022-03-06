@@ -18,10 +18,10 @@ public function run()
           'name' => 'admin'
      ]);
      Role::create([
-          'name' => 'resepsionis'
+          'name' => 'petugas'
      ]);
      Role::create([
-          'name' => 'user'
+          'name' => 'siswa'
      ]);
 }
 }
