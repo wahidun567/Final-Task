@@ -29,9 +29,9 @@ class SiswaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_siswa' => 'required',
-            'email' => 'required',
-            'nisn' => 'required',
-            'nis' => 'required',
+            'email' => 'required|unique:users',
+            'nisn' => 'required|unique:siswa',
+            'nis' => 'required|unique:siswa',
             'alamat' => 'required',
             'no_telepon' => 'required',
         ]);
@@ -48,7 +48,7 @@ class SiswaController extends Controller
 
                 Siswa::create([
                     'user_id' => $user->id,
-                    'kode_siswa' => 'SSWR'.Str::upper(Str::random(5)),
+                    'kode_siswa' => 'SSW'.Str::upper(Str::random(5)),
                     'nisn' => $request->nisn,
                     'nis' => $request->nis,
                     'nama_siswa' => $request->nama_siswa,
@@ -60,9 +60,8 @@ class SiswaController extends Controller
             });
             return redirect('admin/siswa')->with('success', 'Data berhasil disimpan!');   
         }else {
-            return $validator->errors()->all();
-            // dd($error->all()=='The email has already been taken.');
-            return redirect('admin/siswa/create')->with('error', 'Data gagal disimpan, beberapa data ada yang sudah digunakan');
+            $validate = $validator->errors()->all();
+            return redirect('admin/siswa/create')->with('gagal', $validate);
         }
     }
 
@@ -85,9 +84,9 @@ class SiswaController extends Controller
      */
     public function edit($id)
     {
-        $siswa = Siswa::with(['kelas', 'spp'])->findOrFail($id);
+        $siswa = Siswa::with(['kelas', 'spp', 'user'])->findOrFail($id);
         $kelas = Kelas::all();
-        return view('admin.siswa.edit',compact('siswa','kelas'));
+        return view('admin.siswa.edit',compact('siswa', 'kelas'));
     }
 
     /**
@@ -97,42 +96,33 @@ class SiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function update(Request $request, $id)
     {
-        // if($request->all() === $request)
         $validator = Validator::make($request->all(), [
             'nama_siswa' => 'required',
-            'email' => 'required',
-            'nisn' => 'required',
-            'nis' => 'required',
             'alamat' => 'required',
             'no_telepon' => 'required',
         ]);
+
         if ($validator->passes()) {
             Siswa::findOrFail($id)->update([
-                'nisn' => $request->nisn,
-                'nis' => $request->nis,
                 'nama_siswa' => $request->nama_siswa,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'alamat' => $request->alamat,
                 'no_telepon' => $request->no_telepon,
-                'kelas' => $request->kelas_id,
+                'kelas_id' => $request->kelas_id,
             ]);
-            User::findOrFail($id)->update([
-                'name' => $request->nama_siswa,
-                'email' => $request->email,
-            ]);
-            return redirect('admin/siswa')->with('success', 'Data berhasil diubah!');   
+
+            return redirect('admin/siswa')->with('success', 'Data berhasil diupdate!');
         }
-        return redirect('admin/siswa')->with('error', 'Data gagal diubah, beberapa data ada yang sudah digunakan');
+        $validate = $validator->errors()->all();
+        return redirect('admin/siswa/'.$id.'/edit')->with('gagal', $validate);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
+
     public function destroy($id)
     {
         $siswa = Siswa::findOrFail($id);

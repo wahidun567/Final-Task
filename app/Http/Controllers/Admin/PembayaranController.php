@@ -15,7 +15,10 @@ class PembayaranController extends Controller
      */
     public function index(Request $request)
     {
-        return view('admin.pembayaran.index');
+        $data = Pembayaran::with(['siswa' => function($query){
+            $query->with('kelas');
+        }, 'petugas'])->latest()->get();
+        return view('admin.pembayaran.index', compact('data'));
     }
 
     /**

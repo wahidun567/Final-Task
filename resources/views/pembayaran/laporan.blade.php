@@ -1,5 +1,5 @@
 @extends('admin.default')
-@section('title', 'Laporan')
+@section('title', 'Laporan Pembayaran')
 @section('content')
 <div class="container">
 		<x-alert></x-alert>

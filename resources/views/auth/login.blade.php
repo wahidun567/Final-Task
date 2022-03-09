@@ -2,6 +2,7 @@
 @section('title','Login')
 @section('content')
 <div class="container pt-5">
+    <x-alert></x-alert>
     <div class="row justify-content-center pt-5">
         <b class="text-center fs-2 mb-3">Pembayaran Spp Sekolah</b>
         <div class="col-md-5 card py-4 shadow">

@@ -1,7 +1,7 @@
 @extends('admin.default')
 @section('title', 'Data Pembayaran')
 @push('css')
-	<!-- Select2 -->
+	{{-- Penambahan Template dan fungsi admin LTE --}}
 	<link rel="stylesheet" href="{{ asset('plugins') }}/select2/css/select2.min.css">
 	<link rel="stylesheet" href="{{ asset('plugins') }}/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 @endpush
@@ -113,24 +113,20 @@
 @endsection
 @push('js')
 <!-- Select2 -->
+{{-- belajar menggunkan ajax  --}}
 <script src="{{ asset('plugins') }}/select2/js/select2.full.min.js"></script>
 <script>
 	//Initialize Select2 Elements
-	$('.select2').select2()
+	$('.select2').select2()	
 
 	//Initialize Select2 Elements
 	$('.select2bs4').select2({
 	theme: 'bootstrap4'
 	})
 
-	function rupiah(number) {
-		var formatter = new Intl.NumberFormat('ID', {
-			style: 'currency',
-			currency: 'idr',
-		})
 
-		return formatter.format(number)
-	}
+
+
 
 	$(document).on("change", "#tahun_bayar", function(){
 		var tahun = $(this).val()
@@ -151,13 +147,12 @@
 		var total_bulan = bulan.length
 		var total_bayar = $("#jumlah_bayar").val()
 		var hasil_bayar = (total_bulan * total_bayar)
-
 		var formatter = new Intl.NumberFormat('ID', {
 			style: 'currency',
 			currency: 'idr',
 		})
-
 		$("#total_bayar").val(formatter.format(hasil_bayar))
 	})
+	
 </script>
 @endpush

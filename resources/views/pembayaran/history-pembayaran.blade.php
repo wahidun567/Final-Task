@@ -39,6 +39,7 @@
                 <td>{{ $d->tahun_bayar }}</td>
                 <td>{{ $d->jumlah_bayar }}</td>
                 <td>
+                  {{-- kasih blank --}}
                   <a href="{{ route('pembayaran.history-pembayaran.print',$d->id) }}"class="btn btn-danger btn-sm ml-2" target="_blank">
                   <i class="fas fa-print fa-fw"></i></a>
                 </td>

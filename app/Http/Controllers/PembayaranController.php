@@ -37,6 +37,7 @@ class PembayaranController extends Controller
     	return view('pembayaran.bayar', compact('siswa', 'spp'));
     }
 
+// mengambil data tahun dan nominal dari table spp
     public function spp($tahun)
     {
         $spp = Spp::where('tahun', $tahun)
@@ -46,6 +47,7 @@ class PembayaranController extends Controller
             'nominal_rupiah' => 'Rp '.number_format($spp->nominal, 0, 2, '.'),
         ]);
     }
+
 
     public function prosesBayar(Request $request, $nisn)
     {
@@ -85,7 +87,7 @@ class PembayaranController extends Controller
             return back()
                 ->with('error', 'Siswa Dengan Nama : '.$request->nama_siswa.' , NISN : '.
                 $request->nisn.' Sudah Membayar Spp di bulan yang diinput ('.
-                implode($pembayaran,',').")".' , di Tahun : '.$request->tahun_bayar.' , Pembayaran Dibatalkan');
+                implode($pembayaran.',').")".' , di Tahun : '.$request->tahun_bayar.' , Pembayaran Dibatalkan');
         }
     }
 
@@ -149,17 +151,17 @@ class PembayaranController extends Controller
 
         $data['pembayaran'] = Pembayaran::with(['petugas', 'siswa'])
             ->whereBetween('tanggal_bayar', $tanggal)->get();
+// dd($data);
 
         if ($data['pembayaran']->count() > 0) {
             $pdf = PDF::loadView('pembayaran.laporan-preview', $data);
             return $pdf->download('pembayaran-spp-'.
             Carbon::parse($request->tanggal_mulai)->format('d-m-Y').'-'.
-            Carbon::parse($request->tanggal_selesai)->format('d-m-Y').
-            Str::random(9).'.pdf');   
+            Carbon::parse($request->tanggal_selesai)->format('d-m-Y').'.pdf');   
         }else{
             return back()->with('error', 'Data pembayaran spp tanggal '.
                 Carbon::parse($request->tanggal_mulai)->format('d-m-Y').' sampai dengan '.
-                Carbon::parse($request->tanggal_selesai)->format('d-m-Y').' Tidak Tersedia');
+                Carbon::parse($request->tanggal_selesai)->format('d-m-Y').' Tidak tersedia');
         }
     }
 }

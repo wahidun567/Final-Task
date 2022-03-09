@@ -27,18 +27,25 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
+              {{-- @dd($data) --}}
+              @foreach ( $data as $d )
+              <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $d->siswa->nama_siswa }}</td>
+                <td>{{ $d->siswa->kelas->nama_kelas }}</td>
+                <td>{{ $d->siswa->nisn }}</td>
+                <td>{{ $d->tanggal_bayar }}</td>
+                <td>{{ $d->petugas->nama_petugas }}</td>
+                <td>{{ $d->bulan_bayar }}</td>
+                <td>{{ $d->tahun_bayar }}</td>
+                <td>{{ $d->jumlah_bayar }}</td>
+                <td>
+                  <a href="{{ route('pembayaran-spp.destroy',$d->id) }}" class="btn btn-danger btn-sm ml-2 btn-delete">
+                    <i class="fas fa-trash fa-fw"></i>
+                  </a>
+                </td>
+              </tr>
+              @endforeach
             </tbody>
           </table>
         </div>

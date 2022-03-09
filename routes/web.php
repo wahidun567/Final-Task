@@ -59,6 +59,17 @@ Route::prefix('pembayaran')->middleware(['auth', 'role:admin|petugas'])->group(f
 	Route::post('laporan', 'PembayaranController@printPdf')->name('pembayaran.print-pdf');
 });
 
+// route Siswa
+Route::prefix('siswa')
+->middleware(['auth', 'role:siswa'])
+->group(function(){
+	Route::get('pembayaran-spp', 'SiswaController@pembayaranSpp')->name('siswa.pembayaran-spp');
+	Route::get('pembayaran-spp/{spp:tahun}', 'SiswaController@pembayaranSppShow')->name('siswa.pembayaran-spp.pembayaranSppShow');
+	Route::get('history-pembayaran', 'SiswaController@historyPembayaran')->name('siswa.history-pembayaran');
+	Route::get('history-pembayaran/preview/{id}', 'SiswaController@previewHistoryPembayaran')->name('siswa.history-pembayaran.preview');
+	Route::get('laporan-pembayaran', 'SiswaController@laporanPembayaran')->name('siswa.laporan-pembayaran');
+	Route::post('laporan-pembayaran', 'SiswaController@printPdf')->name('siswa.laporan-pembayaran.print-pdf');
+});
 
 // Route Profile
 Route::get('/profile', 'ProfileController@index');

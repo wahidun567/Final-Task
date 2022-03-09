@@ -48,14 +48,15 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('admin/user/edit',compact('user'));
+        return view('admin.user.edit',compact('user'));
     }
 
     public function update(Request $request, $id)
     {
+        $password = User::findOrFail($id);
         User::findOrFail($id)->update([
             'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $request->old_password
+            'password' => $request->password ? Hash::make($request->password) : $password->password
         ]);
         return redirect('admin/user')->with('success', 'Data berhasil diubah!');
     }

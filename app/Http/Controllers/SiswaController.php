@@ -35,7 +35,6 @@ class SiswaController extends Controller
 
     public function historyPembayaran(Request $request)
     {
-        if ($request->ajax()) {
             $siswa = Siswa::where('user_id', Auth::user()->id)
                 ->first();
             
@@ -45,20 +44,8 @@ class SiswaController extends Controller
                 ->where('siswa_id', $siswa->id)
                 ->latest()
                 ->get();
-            
-            return \Yajra\DataTables\Facades\DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row) {
-                    $btn = '<div class="row"><a href="'.route('siswa.history-pembayaran.preview', $row->id).'"class="btn btn-danger btn-sm ml-2" target="_blank">
-                    <i class="fas fa-print fa-fw"></i>
-                    </a>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-    	
-    	return view('siswa.history-pembayaran');
+
+        return view('siswa.history-pembayaran',compact('data','siswa'));
     }
 
     public function previewHistoryPembayaran($id)
@@ -71,7 +58,7 @@ class SiswaController extends Controller
             ->where('siswa_id', $data['siswa']->id)
             ->first();
         
-        $pdf = \Barryvdh\DomPDF\PDF::loadView('siswa.history-pembayaran-preview',$data);
+        $pdf = PDF::loadView('siswa.history-pembayaran-preview',$data);
         return $pdf->stream();
     }
 
@@ -94,7 +81,7 @@ class SiswaController extends Controller
         $data['data_siswa'] = $siswa;
 
         if ($data['pembayaran']->count() > 0) {
-            $pdf = \Barryvdh\DomPDF\PDF::loadView('siswa.laporan-preview', $data);
+            $pdf = PDF::loadView('siswa.laporan-preview', $data);
             return $pdf->download('pembayaran-spp-'.$siswa->nama_siswa.'-'.
                 $siswa->nisn.'-'.
                 $request->tahun_bayar.'-'.

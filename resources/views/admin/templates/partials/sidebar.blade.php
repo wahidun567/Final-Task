@@ -14,7 +14,19 @@
             <i class="fas fa-user-circle fa-lg pt-2"></i>
         </div>
         <div class="info">
-            <a href="" class="d-block">{{ Auth::user()->name }}</a>
+            <a href="" class="d-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                {{ Auth::user()->name }}
+            </a>
+            <div class="collapse mt-2" id="collapseExample">
+                <div class="row">
+                    <a href="/profile" class="dropdown-item">
+                        <i class="fas fa-fw fa-user mr-2"></i> Profile
+                    </a>
+                    <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#modal-default">
+                        <i class="fas fa-fw fa-sign-out-alt mr-2"></i> Logout
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -109,7 +121,7 @@
                 </a>
             </li>            
             <li class="nav-item">
-                <a href="{{ route('pembayaran-spp.index') }}" class="nav-link {{ Request::is('*pembayaran*') ? 'active' : '' }}">
+                <a href="{{ route('pembayaran-spp.index') }}" class="nav-link {{ Request::is('admin/pembayaran*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-list"></i>
                     <p>Pembayaran</p>
                 </a>
@@ -121,7 +133,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('spp.index') }}" class="nav-link {{ Request::is('*spp*') ? 'active' : '' }}">
+                <a href="{{ route('spp.index') }}" class="nav-link {{ Request::is('admin/spp*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-money-bill"></i>
                     <p>SPP</p>
                 </a>
@@ -132,25 +144,25 @@
             @role('admin|petugas')
             <li class="nav-header"><strong>PEMBAYARAN</strong></li>
             <li class="nav-item">
-                <a href="{{ route('pembayaran.index') }}" class="nav-link {{ Request::is('*pembayaran/bayar*') ? 'active' : '' }}">
+                <a href="{{ route('pembayaran.index') }}" class="nav-link {{ Request::is('pembayaran/bayar*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-money-check"></i>
                     <p>Pembayaran</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('pembayaran.status-pembayaran') }}" class="nav-link {{ Request::is('*pembayaran/status*') ? 'active' : '' }}">
+                <a href="{{ route('pembayaran.status-pembayaran') }}" class="nav-link {{ Request::is('pembayaran/status*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-money-bill"></i>
                     <p>Status Pembayaran</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('pembayaran.history-pembayaran') }}" class="nav-link {{ Request::is('*pembayaran/history*') ? 'active' : '' }}">
+                <a href="{{ route('pembayaran.history-pembayaran') }}" class="nav-link {{ Request::is('pembayaran/history*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-history"></i>
                     <p>History Pembayaran</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('pembayaran.laporan') }}" class="nav-link {{ Request::is('*pembayaran/laporan*') ? 'active' : '' }}">
+                <a href="{{ route('pembayaran.laporan') }}" class="nav-link {{ Request::is('pembayaran/laporan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-file"></i>
                     <p>Laporan Pembayaran</p>
                 </a>
@@ -160,19 +172,19 @@
             @role('siswa')
             <li class="nav-header">PEMBAYARAN</li>
             <li class="nav-item">
-                <a href="{{ route('siswa.pembayaran-spp') }}" class="nav-link {{ Request::is('*pembayaran*') ? 'active' : '' }}">
+                <a href="{{ route('siswa.pembayaran-spp') }}" class="nav-link {{ Request::is('siswa/pembayaran*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-money-bill"></i>
                     <p>Pembayaran</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('siswa.history-pembayaran') }}" class="nav-link {{ Request::is('*siswa*') ? 'active' : '' }}">
+                <a href="{{ route('siswa.history-pembayaran') }}" class="nav-link {{ Request::is('siswa/history*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-history"></i>
                     <p>History Pembayaran</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('siswa.laporan-pembayaran') }}" class="nav-link {{ Request::is('*siswa/laporan*') ? 'active' : '' }}">
+                <a href="{{ route('siswa.laporan-pembayaran') }}" class="nav-link {{ Request::is('siswa/laporan*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-file"></i>
                     <p>Laporan</p>
                 </a>
